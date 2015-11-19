@@ -1,0 +1,64 @@
+---
+title: "Workshop on Doing Data Analysis"
+author: "Michael Andreae"
+date: "November 19, 2015"
+output: pdf_document
+---
+
+## Introduction
+
+This is an R Markdown document to introduce you to R and Rstudio. (For more details on using R Markdown see <http://rmarkdown.rstudio.com>).
+
+To learn more about R goto QickR clikcing this link:
+<http://www.statmethods.net/>
+
+##### Computer code (above) will lead to an action on the screen (below) looking like this:
+
+```{r}
+print("this is code")
+```
+
+
+
+##### Below is text explaining what happend: 
+
+You called the function $print$ and it printed the string between the brackets. Try printing hello world..., note what is printed needs to be between the brackets and if it is a string in double quotation marks.
+
+## First Step: Calculating something
+
+```{r}
+# Commenting
+# Simple calculations
+5+5
+6^2
+2^8
+2.4 * 4.5
+3/5
+(3+3)* 4+5
+
+# Square Root
+sqrt(4) 
+```
+
+## Second Step: Generating Data
+
+```{r}
+# a sequence
+1:10
+
+# Assigning (putting numbers into) variables
+a<- 4
+b<-5
+a*b
+c <- 1:10
+# c
+```
+
+## Third Step: Your workspace ty
+
+```{r}
+getwd() # print the current working directory - cwd 
+ls()    # list the objects in the current workspace
+```
+
+## Different data types 
