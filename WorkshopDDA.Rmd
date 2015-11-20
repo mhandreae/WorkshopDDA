@@ -9,7 +9,7 @@ output: pdf_document
 
 This is an R Markdown document to introduce you to R and Rstudio. (For more details on using R Markdown see <http://rmarkdown.rstudio.com>).
 
-To learn more about R goto QickR clikcing this link:
+To learn more about R and Rstudio go to QickR clicking this link:
 <http://www.statmethods.net/>
 
 ##### Computer code (above) will lead to an action on the screen (below) looking like this:
@@ -54,11 +54,31 @@ c <- 1:10
 # c
 ```
 
-## Third Step: Your workspace ty
+## Third Step: Your workspace
 
 ```{r}
 getwd() # print the current working directory - cwd 
 ls()    # list the objects in the current workspace
+
+# Set your working directory
+
+# setwd("C:/Users/Micheal/Dropbox/Professional/Teaching and presentations/ASA-IARS-PGA/seminar/Doing Data Analysis/WorkshopDDA")
 ```
 
-## Different data types 
+## Fourth Step: saving and loading data
+
+```{r}
+
+#Save your workspace
+save(a, b, c, file = "mydata.Rdata")
+
+# Clean workspace
+rm(list=ls())
+
+# Load your saved data
+load("mydata.Rdata")
+```
+
+## Fifth Step: Different data types
+
+
