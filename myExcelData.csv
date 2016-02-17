@@ -1,0 +1,12 @@
+name,age,gender,Gluc before,Gluc after,treatment
+Joe,34,male,123,160,0
+Jim,32,male,135,155,0
+Julia,28,female,83,110,0
+Jack,45,male,230,300,0
+John,37,male,180,201,0
+Ellise,53,female,200,201,1
+Erin,26,female,172,172,1
+Erika,27,female,130,135,1
+Emanuelle,22,female,203,209,1
+Enrique,53,male,85,86,1
+Eva,40,female,84,100,1
