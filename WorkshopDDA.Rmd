@@ -35,10 +35,12 @@ You called the function $print$ and it printed the string between the brackets. 
 2.4 * 4.5
 3/5
 (3+3)* 4+5
-
+5-2
 # Square Root
 sqrt(4) 
 ```
+
+You saw how to use R as a calculator. Let us see if you now can have R tell you what five times five times five is? Good job, try some more complicated calculations, while you wait for everybody to catch up...
 
 ## Second Step: Generating Data
 
@@ -51,8 +53,12 @@ a<- 4
 b<-5
 a*b
 c <- 1:10
-# c
+c
 ```
+
+The first command generated an increasing sequence; the second set of commands assigned values to variables and then used these variables for calculations and to have the values printed on the screen. 
+
+Can you generate a sequence from 20 to 25? Can you have it go down instead of up. What happens if you multiply c (the sequence 1 to 10) with a? Try other things...
 
 ## Third Step: Your workspace
 
@@ -61,9 +67,16 @@ getwd() # print the current working directory - cwd
 ls()    # list the objects in the current workspace
 
 # Set your working directory
+setwd("C:/Users/Micheal/Dropbox/Professional/Teaching and presentations/ASA-IARS-PGA/seminar/Doing Data Analysis/WorkshopDDA")
 
 # setwd("C:/Users/Micheal/Dropbox/Professional/Teaching and presentations/ASA-IARS-PGA/seminar/Doing Data Analysis/WorkshopDDA")
 ```
+
+The above are commands to get you the path to your current working directory and to list the objects in your workspace. Your "enviroment" is also acessible in the top right hand window. What does the history tab mean? What is the little broom doing?
+
+Set the working directory to the directory where you have this file saved, but clicking on "Session/Set Working Directory / Source File location"...
+
+Check out other options you have with under File, Edit, Code, View...
 
 ## Fourth Step: saving and loading data
 
@@ -79,6 +92,90 @@ rm(list=ls())
 load("mydata.Rdata")
 ```
 
-## Fifth Step: Different data types
+Before you erase all your data to start with a clean slate, you save your data with save, in the file mydata. The you clean your workspace.
+
+## Fifth Step: Importing Data from Excell
+
+```{r}
+myExcelData <- read.csv("myExcelData.csv") # reads in a Excel sheet
+# and saved it as a comma deliminated file and converts it into 
+# a dataframe
+
+myExcelData # looks at the dataframe
+View(myExcelData) # Graphical display of dataframe
+```
+
+You can read data from an excel sheet best after saving it in Excel as comma separated file. Instead of using the command line you can use the import Graphical user interface "Import Dataset". This leads R to make the data into a data frame.
+
+To view the Dataframe, type the name or click it in the environment vindow, top right.
+
+## Six step: Examining your data
+
+```{r}
+myExcelData$age
+hist(myExcelData$age)
+mean(myExcelData$age)
+#NEED data file
+```
+
+To get individual columns of your dataframe, try following the colum name after a dollar sign. Note R/Rstudio is case sensitive...
+
+Make a histogram of the age distribution in the study cohort. You see how we calcualted the mean age. What is the median age?
 
 
+## Seventh Step: Different data types
+
+```{r}
+attributes(myExcelData)
+class(a)
+class(c)
+class(myExcelData$name)
+class("I am a character string")
+```
+
+It is crucial that you understand what different types of data you have. This is important to talk with collaborators and statisticians and with computers and to organize your data efficiently.
+
+Describe what different types of data your own research study has...
+
+## Eight Step: What is the difference
+
+```{r}
+mean(myExcelData$Gluc.after)
+```
+
+Calculate the mean Glucose level before versus afterwards. Which is higher. Is this the best way to compare?
+
+## Nineth Step: Simple Graphics
+
+```{r}
+attach(myExcelData)
+boxplot(Gluc.before ~ treatment)
+```
+
+We compare the Glucose levels in the two groups before treatment using a box plot. Explain what the various things on the graph mean. Can you compare the Glucose levels after treatment by group? Do you think there is an effect of the treatment?
+
+## Tenth Step: Estimating Treatment effects
+
+```{r}
+attach(myExcelData)
+myExcelData$Gluc.dif <- Gluc.after - Gluc.before
+```
+
+You made a new variable: The difference of Glucose after minus before for each patient. Look at the Data, do you see the new variable, did it work alright? Can you make a box plot of the difference in Glucose by treatment, i.e. comparing the median difference in Glucose levels before versus afterwards in the two treatment groups... Is this difference statistically significant. What test is appropriate?
+
+## Eleventh Step: Testing statistical significance.
+
+```{r}
+t.test(myExcelData$Gluc.dif~treatment)
+t.test(x=myExcelData$Gluc.before, y=myExcelData$Gluc.after, paired=TRUE)
+```
+
+You used the infamour Student t test, but got two different p-values, which is the correct one and why? What do the p-values indicate and why are they different?
+
+## Twelveth Step: Get more help
+
+```{r}
+help(t.test)
+??t.test
+#goto Rseek.org
+```
