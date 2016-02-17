@@ -1,0 +1,89 @@
+---
+title: "Second Workshop on Doing Data Analysis"
+author: "Michael Andreae"
+date: "Tuesday, February 17, 2016"
+output: pdf_document
+---
+
+## Introduction
+
+Today we will learn 
+
+1. how to use packages in R and how 
+2. how to use graphics, specifically ggplot2
+
+Remember, from last time:
+##### Computer code (above) will lead to an action on the screen (below) looking like this:
+```{r}
+print("this is code")
+```
+
+##### Below is text explaining what happend: 
+
+You called the function $print$ and it printed the string between the brackets. Try printing hello world..., note what is printed needs to be between the brackets and if it is a string in double quotation marks.
+
+## First Step: installing a package
+
+Use the mouse to point at *Tools* dropdown to *Install Packages...*, put in the name **ggplot2**, (it should autopopulate when you entered the first few letters...) Make sure you tick the box, *Install dependencies*
+
+Alternatively, use R code as below:
+
+#### Install a package
+```{r, eval=FALSE, echo=TRUE}
+install.packages("ggplot2")
+```
+
+Why would you care about packages? R and Rstudio are only the base version but there are innumerable special feature and packages for almost any purpose, e.g. the package **ggplot2** for graphics
+
+## Second Step: library
+To use a package after you installed it on your computer, you have to "activate"" it, by calling the library 
+
+```{r}
+library(ggplot2)
+```
+
+Alternatively you can do this with point and click: The middle tab in the right lower window of RStudio called *Packages*, will open a field where you enter the desired package. Type **ggplot2** and the packages are filtered until only related packages are visible. If you did not install **ggplot2** yet, you could do it here as well by clicking *Install*.
+
+## Third Step: graphics, using ggplot2
+So lets us see what ggplot2 can do for you
+
+## Get the dataset in R from a package called *nlmeU*
+```{r}
+library(nlmeU)
+data(armd, package="nlmeU")
+```
+
+Some datafiles are already available in R for you to experiment with, for example if your call the library **nlmeU** aboe, you can request the datafile *armd*. Let us look at the dataset..., for this we use another library to make nicer tables **knitr**
+
+## Look at the dataset
+```{r}
+library(knitr)
+View(armd)
+kable(armd[1:10,])
+```
+
+This is a dataframe that contains data in long format. What does this mean? There are several columns with subject ID, treatment allocation, baseline visual score,... But you notice that the same subject appears in several rows. **Each ro is one observation**, and there are multiple observations in the same subject on several follow-up appointments, for example for subject *1* at 4 weeks and at 12 weeks. Let us get an idea what the data look like...
+
+## Make a plot with ggplot2 
+```{r}
+library(ggplot2)
+p <- ggplot(armd[1:50,])
+p+ geom_path (aes(x=time, y=visual, 
+                  group=subject, color=subject)) 
+```
+
+After calling the **ggplot2** library, we tell ggplot in the first line to use the first 50 lines of the dataset *armd*, in the second line we ask it to plot a path (trajectory) of visual acuity over time, grouping and coloring the data by subject.
+
+## Save or label the plot
+```{r}
+q <- p+ geom_path (aes(x=time, y=visual, 
+                  group=subject, color=subject)) 
+save(q, file="q.Rdata")
+```
+
+We can store the resulting plot as an object *q* and save it for later. See if you find the object under the Tab **Files**. If you double click it, *q* is loaded into the active memory and you can display it again or add labels...
+
+```{r}
+q
+q + labs(title="Individual patient trajectories") + xlab("Days")
+```
