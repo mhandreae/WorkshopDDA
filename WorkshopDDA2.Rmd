@@ -81,9 +81,11 @@ q <- p+ geom_path (aes(x=time, y=visual,
 save(q, file="q.Rdata")
 ```
 
-We can store the resulting plot as an object *q* and save it for later. See if you find the object under the Tab **Files**. If you double click it, *q* is loaded into the active memory and you can display it again or add labels...
+We can store the resulting plot as an object *q* and save it for later. See if you find the object under the Tab **Files**. If you double click it, *q* is loaded into the active memory (or you can use the command *load*) and you can display it again or add labels...
 
 ```{r}
+rm(list=ls()) # remove everything
+load("q.Rdata")
 q
 q + labs(title="Individual patient trajectories") + xlab("Days")
 ```
