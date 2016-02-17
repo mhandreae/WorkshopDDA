@@ -9,8 +9,8 @@ output: pdf_document
 
 Today we will learn 
 
-1. how to use packages in R and how 
-2. how to use graphics, specifically **ggplot2**
+1. how to use packages in R, 
+2. how to use graphics, specifically **ggplot2** and
 3. how to table data with **knitr** and understand the *long format*
 
 ## Review
@@ -133,3 +133,4 @@ s+ facet_grid(. ~ treat.f)  +guides(fill=FALSE)
 ```
 
 **ggplot** are build sequentially as illustrated above...
+More information on **ggplot2** can be found  [here](http://www.statmethods.net/advgraphs/ggplot2.html) and [here](http://docs.ggplot2.org/current/)...
