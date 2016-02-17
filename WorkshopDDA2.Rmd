@@ -13,6 +13,7 @@ Today we will learn
 2. how to use graphics, specifically **ggplot2**
 3. how to table data with **knitr** and understand the *long format*
 
+## Review
 Remember, from last time:
 
 ##### Computer code (above) will lead to an action on the screen (below) looking like this:
@@ -28,6 +29,7 @@ You called the function $print$ and it printed the string between the brackets. 
 
 Use the mouse to point at *Tools* dropdown to *Install Packages...*, put in the name **ggplot2**, (it should autopopulate when you entered the first few letters...) Make sure you tick the box, *Install dependencies*
 
+## using R code
 Alternatively, use R code as below:
 
 #### Install a package
@@ -44,6 +46,7 @@ To use a package after you installed it on your computer, you have to "activate"
 library(ggplot2)
 ```
 
+## Point and click
 Alternatively you can do this with point and click: The middle tab in the right lower window of RStudio called *Packages*, will open a field where you enter the desired package. Type **ggplot2** and the packages are filtered until only related packages are visible. If you did not install **ggplot2** yet, you could do it here as well by clicking *Install*.
 
 # Third step: get some data to plot
@@ -61,10 +64,13 @@ Some datafiles are already available in R for you to experiment with, for exampl
 ```{r}
 library(knitr)
 View(armd)
-kable(armd[1:10,])
+kable(armd[1:10,c(1:3,6:7)])
 ```
 
-This is a dataframe that contains data in long format. What does this mean? There are several columns with subject ID, treatment allocation, baseline visual score,... But you notice that the same subject appears in several rows. **Each row is one observation**, and there are multiple observations in the same subject on several follow-up appointments, for example for subject *1* at 4 weeks and at 12 weeks. Let us get a graphical idea what the data look like...
+This is a dataframe that contains data in long format. What does this mean? There are several columns with subject ID, treatment allocation, baseline visual score,... But you notice that the same subject appears in several rows. **Each row is one observation**, and there are multiple observations in the same subject on several follow-up appointments, for example for subject *1* at 4 weeks and at 12 weeks. 
+
+## Subsetting
+How did we get just the first 10 rows in the table? How did we limit the table to only the first three and the last two rows? This is called subsetting, try it out. Then let us get a graphical idea what the data look like...
 
 
 # Fourth Step: graphics, using ggplot2
@@ -78,7 +84,7 @@ p+ geom_path (aes(x=time, y=visual,
                   group=subject, color=subject)) 
 ```
 
-After calling the **ggplot2** library, we tell ggplot in the first line to use only the first 50 rows of the dataset *armd*, in the second line we ask it to plot a path (trajectory) of visual acuity over time, grouping and coloring the data by subject.
+After calling the **ggplot2** library, we tell ggplot in the first line to use only the first 50 rows of the dataset *armd*, in the second line we ask it to plot a path (trajectory) of visual acuity over time, grouping and coloring the data by subject. Try and look at the second 50 rows. which subjects are displayed?
 
 ## Save or label the plot
 ```{r}
@@ -89,9 +95,41 @@ save(q, file="q.Rdata")
 
 We can store the resulting plot as an object *q* and save it for later. See if you find the object under the Tab **Files**. If you double click it, *q* is loaded into the active memory (or you can use the command *load*) and you can display it again or add labels...
 
+## Retrieving ggplot objects and labeling 
 ```{r}
 rm(list=ls()) # remove everything
 load("q.Rdata")
 q
 q + labs(title="Individual patient trajectories") + xlab("Days")
 ```
+
+go to the Tab **help** and type *theme*, to see a selection of themes and try a few out:
+
+## Themes
+```{r}
+q+ theme_bw()
+q+ theme_dark()
+```
+
+Can you lable the y axis? Check out *ylab* in help, it works like xlab...
+
+# Fifth Step: Facetting
+
+Is there a difference in the treatment versus control group? Could we display the spaghetti plot for each separately?
+
+## Plots by treatment allocation
+```{r}
+q + facet_grid(. ~ treat.f)
+```
+
+The plot is displayed for treatment and placebo subjects separately, but we need more subjects. How can we add more data?
+
+## Building plots sequentially
+```{r}
+r <- ggplot(armd[1:200,])
+s<- r+ geom_path (aes(x=time, y=visual, 
+                  group=subject, color=subject)) 
+s+ facet_grid(. ~ treat.f)  +guides(fill=FALSE) 
+```
+
+**ggplot** are build sequentially as illustrated above...
